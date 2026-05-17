@@ -38,7 +38,10 @@ function App() {
     <div style={pageStyle}>
       <nav style={navbarStyle}>
         <a style={navLogoStyle} href="#">
-        <span className="neon-logo" style={logoGlowStyle}>TFG</span>
+          <span className="neon-logo" style={logoGlowStyle}>
+            TFG
+          </span>
+
           <span style={{ color: "#aaa", fontSize: "13px" }}>
             TheFutureGuy
           </span>
@@ -114,7 +117,7 @@ function App() {
         <h1 style={titleStyle}>Elias "TheFutureGuy" Ivanov</h1>
 
         <p style={subtitleStyle}>
-          69 • Developer • Gamer • Minecraft Plugins • GTA RP • 67
+          Developer • Gamer • Minecraft Plugins • GTA RP
         </p>
 
         <p style={textStyle}>
@@ -153,77 +156,133 @@ function App() {
           </a>
         </div>
 
-        <div style={discordCardStyle}>
-          {discordData ? (
-            <>
-              <img src={avatar} alt="Discord Avatar" style={avatarStyle} />
+        <div style={profileCardsRowStyle}>
+          <div style={discordCardStyle}>
+            {discordData ? (
+              <>
+                <img src={avatar} alt="Discord Avatar" style={avatarStyle} />
 
-              <h2>{discordData.discord_user.username}</h2>
+                <h2>{discordData.discord_user.username}</h2>
 
-              <p
-                style={{
-                  color:
-                    discordData.discord_status === "online"
-                      ? "#43b581"
-                      : discordData.discord_status === "idle"
-                      ? "#faa61a"
-                      : discordData.discord_status === "dnd"
-                      ? "#f04747"
-                      : "#888",
-                  fontWeight: "bold",
-                }}
-              >
-                {discordData.discord_status === "online"
-                  ? "ONLINE"
-                  : discordData.discord_status === "idle"
-                  ? "ABWESEND"
-                  : discordData.discord_status === "dnd"
-                  ? "BITTE NICHT STÖREN"
-                  : "OFFLINE"}
-              </p>
+                <p
+                  style={{
+                    color:
+                      discordData.discord_status === "online"
+                        ? "#43b581"
+                        : discordData.discord_status === "idle"
+                        ? "#faa61a"
+                        : discordData.discord_status === "dnd"
+                        ? "#f04747"
+                        : "#888",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {discordData.discord_status === "online"
+                    ? "ONLINE"
+                    : discordData.discord_status === "idle"
+                    ? "ABWESEND"
+                    : discordData.discord_status === "dnd"
+                    ? "BITTE NICHT STÖREN"
+                    : "OFFLINE"}
+                </p>
 
-              {discordData.listening_to_spotify && (
-                <div style={{ marginTop: "15px" }}>
-                  <p style={{ color: "#1DB954", fontWeight: "bold" }}>
-                    Listening to Spotify 🎵
-                  </p>
+                {discordData.listening_to_spotify && (
+                  <div style={{ marginTop: "15px" }}>
+                    <p style={{ color: "#1DB954", fontWeight: "bold" }}>
+                      Listening to Spotify 🎵
+                    </p>
 
-                  <p>{discordData.spotify.song}</p>
+                    <p>{discordData.spotify.song}</p>
 
-                  <p style={{ color: "#aaa", marginBottom: "15px" }}>
-                    {discordData.spotify.artist}
-                  </p>
+                    <p style={{ color: "#aaa", marginBottom: "15px" }}>
+                      {discordData.spotify.artist}
+                    </p>
 
-                  <img
-                    src={discordData.spotify.album_art_url}
-                    alt="Album Cover"
-                    style={albumCoverStyle}
-                  />
-
-                  <div style={progressBackgroundStyle}>
-                    <div
-                      style={{
-                        width: `${
-                          ((Date.now() -
-                            discordData.spotify.timestamps.start) /
-                            (discordData.spotify.timestamps.end -
-                              discordData.spotify.timestamps.start)) *
-                          100
-                        }%`,
-                        height: "100%",
-                        background: "#1DB954",
-                        borderRadius: "999px",
-                        transition: "0.5s",
-                      }}
+                    <img
+                      src={discordData.spotify.album_art_url}
+                      alt="Album Cover"
+                      style={albumCoverStyle}
                     />
+
+                    <div style={progressBackgroundStyle}>
+                      <div
+                        style={{
+                          width: `${
+                            ((Date.now() -
+                              discordData.spotify.timestamps.start) /
+                              (discordData.spotify.timestamps.end -
+                                discordData.spotify.timestamps.start)) *
+                            100
+                          }%`,
+                          height: "100%",
+                          background: "#1DB954",
+                          borderRadius: "999px",
+                          transition: "0.5s",
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
-            </>
-          ) : (
-            <p>Lade Discord Daten...</p>
-          )}
+                )}
+              </>
+            ) : (
+              <p>Lade Discord Daten...</p>
+            )}
+          </div>
+
+          <div style={steamCardStyle}>
+            <img src="/logo.png" alt="Steam Avatar" style={avatarStyle} />
+
+            <h2>Steam Profil</h2>
+
+            <p style={{ color: "#66c0f4", fontWeight: "bold" }}>
+              TheFutureGuy
+            </p>
+
+            <p style={{ color: "#aaa", marginTop: "10px" }}>Steam-ID:</p>
+
+            <p style={{ fontSize: "13px", color: "#ccc" }}>
+              76561199191385171
+            </p>
+
+            <p style={{ color: "#aaa", marginTop: "15px" }}>
+              Live Steam-Stats kommen später über API.
+            </p>
+
+            <a
+              href="https://steamcommunity.com/profiles/76561199191385171/"
+              target="_blank"
+              style={smallButtonStyle}
+            >
+              Steam öffnen
+            </a>
+          </div>
         </div>
+      </section>
+
+      <section id="projects" style={projectsSectionStyle}>
+        <h2 style={sectionTitleStyle}>Meine Projekte</h2>
+
+        <div style={projectGridStyle}>
+          {projects.map((project) => (
+            <div style={projectCardStyle} key={project.title}>
+              <h3 style={projectTitleStyle}>{project.title}</h3>
+
+              <p style={projectTextStyle}>{project.description}</p>
+
+              <div style={tagRowStyle}>
+                {project.tags.map((tag) => (
+                  <span style={tagStyle} key={tag}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={youtubeSectionStyle}>
+        <h2 style={sectionTitleStyle}>YouTube / Musik</h2>
 
         <div style={youtubeStyle}>
           <iframe
@@ -239,27 +298,6 @@ function App() {
               maxWidth: "100%",
             }}
           ></iframe>
-        </div>
-      </section>
-
-      <section id="projects" style={projectsSectionStyle}>
-        <h2 style={sectionTitleStyle}>Meine Projekte</h2>
-
-        <div style={projectGridStyle}>
-          {projects.map((project) => (
-            <div style={projectCardStyle} key={project.title}>
-              <h3 style={projectTitleStyle}>{project.title}</h3>
-              <p style={projectTextStyle}>{project.description}</p>
-
-              <div style={tagRowStyle}>
-                {project.tags.map((tag) => (
-                  <span style={tagStyle} key={tag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
     </div>
@@ -304,7 +342,7 @@ const navLogoStyle = {
 }
 
 const logoGlowStyle = {
- color: "#ffffff",
+  color: "#ffffff",
   padding: "7px 14px",
   borderRadius: "999px",
   background: "linear-gradient(135deg, #00d9ff, #ff00ff, #ff8c00)",
@@ -315,6 +353,7 @@ const logoGlowStyle = {
   border: "1px solid rgba(255,255,255,0.4)",
   letterSpacing: "1px",
 }
+
 const navLinksStyle = {
   display: "flex",
   gap: "20px",
@@ -369,7 +408,10 @@ const heroStyle = {
   alignItems: "center",
   flexDirection: "column" as const,
   textAlign: "center" as const,
-  padding: "130px 20px 60px",
+  padding: "160px 20px 80px",
+  width: "100%",
+  maxWidth: "1400px",
+  margin: "0 auto",
 }
 
 const titleStyle = {
@@ -408,18 +450,41 @@ const buttonStyle = {
   fontWeight: "bold",
 }
 
+const profileCardsRowStyle = {
+  display: "flex",
+  gap: "35px",
+  justifyContent: "center",
+  alignItems: "stretch",
+  flexWrap: "wrap" as const,
+  marginTop: "40px",
+  marginBottom: "60px",
+  width: "100%",
+}
+
 const discordCardStyle = {
   background: "rgba(17,17,34,0.9)",
   padding: "28px",
   borderRadius: "20px",
-  width: "350px",
+  width: "420px",
   maxWidth: "90vw",
   boxShadow: "0 0 30px rgba(88, 101, 242, 0.4)",
   border: "1px solid rgba(255,255,255,0.1)",
 }
 
+const steamCardStyle = {
+  background: "rgba(17,17,34,0.9)",
+  padding: "28px",
+  borderRadius: "20px",
+  width: "420px",
+  maxWidth: "90vw",
+  boxShadow: "0 0 30px rgba(102, 192, 244, 0.35)",
+  border: "1px solid rgba(102,192,244,0.25)",
+}
+
 const avatarStyle = {
   width: "100px",
+  height: "100px",
+  objectFit: "cover" as const,
   borderRadius: "50%",
   marginBottom: "15px",
   border: "3px solid #5865F2",
@@ -442,8 +507,16 @@ const progressBackgroundStyle = {
   overflow: "hidden",
 }
 
-const youtubeStyle = {
-  marginTop: "40px",
+const smallButtonStyle = {
+  display: "inline-block",
+  marginTop: "20px",
+  color: "white",
+  textDecoration: "none",
+  padding: "12px 20px",
+  borderRadius: "12px",
+  backgroundColor: "#1b2838",
+  boxShadow: "0 0 18px rgba(102,192,244,0.45)",
+  fontWeight: "bold",
 }
 
 const projectsSectionStyle = {
@@ -496,6 +569,16 @@ const tagStyle = {
   padding: "6px 10px",
   borderRadius: "999px",
   fontSize: "13px",
+}
+
+const youtubeSectionStyle = {
+  padding: "80px 20px 120px",
+  textAlign: "center" as const,
+}
+
+const youtubeStyle = {
+  display: "flex",
+  justifyContent: "center",
 }
 
 export default App
