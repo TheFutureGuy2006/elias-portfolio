@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background: #050505;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 0%;
+  height: 2px;
+  background: #b8b8ff;
+  box-shadow: 0 0 12px rgba(184, 184, 255, 0.9);
+  transition: 0.25s ease;
+}
+
+.nav-link:hover {
+  color: white !important;
+  text-shadow: 0 0 12px rgba(184, 184, 255, 0.9);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.neon-logo {
+  animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+  from {
+    filter: brightness(1);
+  }
+  to {
+    filter: brightness(1.35);
+  }
+}
