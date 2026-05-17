@@ -34,9 +34,6 @@ function App() {
   const currentSteamAppId =
     steamData?.recentGames?.[0]?.appid || steamData?.topGames?.[0]?.appid
 
-  const steamGameBanner = currentSteamAppId
-    ? `https://cdn.cloudflare.steamstatic.com/steam/apps/${currentSteamAppId}/header.jpg`
-    : null
 
   const projects = [
     {
@@ -280,13 +277,6 @@ function App() {
           </div>
 
           <div className="profile-card-hover" style={steamCardStyle}>
-            {steamGameBanner && (
-              <img
-                src={steamGameBanner}
-                alt="Steam Game Banner"
-                style={steamBannerStyle}
-              />
-            )}
 
             <img
               src={steamData?.profile?.avatarfull || "/logo.png"}
@@ -303,7 +293,39 @@ function App() {
                 ? `Game Highlight: ${currentSteamGame}`
                 : "Momentan kein Spiel geöffnet"}
             </p>
+<div
+  style={{
+    background: "linear-gradient(135deg, rgba(102,192,244,0.18), rgba(88,101,242,0.12))",
+    border: "1px solid rgba(102,192,244,0.25)",
+    borderRadius: "18px",
+    padding: "16px",
+    marginTop: "18px",
+    marginBottom: "18px",
+    boxShadow: "0 0 25px rgba(102,192,244,0.22)",
+  }}
+>
+  <p
+    style={{
+      color: "#66c0f4",
+      fontWeight: "bold",
+      marginBottom: "8px",
+      fontSize: "14px",
+      letterSpacing: "1px",
+    }}
+  >
+    GAME HIGHLIGHT
+  </p>
 
+  <h3
+    style={{
+      margin: 0,
+      fontSize: "24px",
+      color: "white",
+    }}
+  >
+    🎮 {currentSteamGame || "Kein Spiel erkannt"}
+  </h3>
+</div>
             <p style={{ color: "#aaa", marginTop: "15px" }}>Spiele:</p>
 
             <div style={{ marginTop: "10px", marginBottom: "20px" }}>
@@ -570,15 +592,6 @@ const discordBannerStyle = {
   margin: "-28px -28px 20px",
   borderRadius: "20px 20px 0 0",
   boxShadow: "0 0 25px rgba(88,101,242,0.35)",
-}
-
-const steamBannerStyle = {
-  width: "calc(100% + 56px)",
-  height: "120px",
-  objectFit: "cover" as const,
-  margin: "-28px -28px 20px",
-  borderRadius: "20px 20px 0 0",
-  boxShadow: "0 0 25px rgba(102,192,244,0.35)",
 }
 
 const avatarStyle = {
