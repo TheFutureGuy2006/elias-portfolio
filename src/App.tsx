@@ -2,11 +2,22 @@ import { useEffect, useState } from "react"
 
 function App() {
   const [discordData, setDiscordData] = useState<any>(null)
+  const [steamData, setSteamData] = useState<any>(null)
 
   useEffect(() => {
     fetch("https://api.lanyard.rest/v1/users/702057545925132371")
       .then((res) => res.json())
       .then((data) => setDiscordData(data.data))
+  }, [])
+
+  useEffect(() => {
+    fetch("/api/steam")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Steam Daten:", data)
+        setSteamData(data)
+      })
+      .catch((error) => console.log("Steam API Fehler:", error))
   }, [])
 
   const avatar = discordData
@@ -230,23 +241,33 @@ function App() {
           </div>
 
           <div style={steamCardStyle}>
-            <img src="/logo.png" alt="Steam Avatar" style={avatarStyle} />
+            <img
+              src={steamData?.profile?.avatarfull || "/logo.png"}
+              alt="Steam Avatar"
+              style={avatarStyle}
+            />
 
-            <h2>Steam Profil</h2>
+            <h2>{steamData?.profile?.personaname || "Steam Profil"}</h2>
 
             <p style={{ color: "#66c0f4", fontWeight: "bold" }}>
-              TheFutureGuy
+              {steamData?.profile?.gameextrainfo
+                ? `Spielt gerade: ${steamData.profile.gameextrainfo}`
+                : "Momentan kein Spiel geöffnet"}
             </p>
 
-            <p style={{ color: "#aaa", marginTop: "10px" }}>Steam-ID:</p>
+            <p style={{ color: "#aaa", marginTop: "15px" }}>Letzte Spiele:</p>
 
-            <p style={{ fontSize: "13px", color: "#ccc" }}>
-              76561199191385171
-            </p>
-
-            <p style={{ color: "#aaa", marginTop: "15px" }}>
-              Live Steam-Stats kommen später über API.
-            </p>
+            <div style={{ marginTop: "10px", marginBottom: "20px" }}>
+              {steamData?.recentGames?.length > 0 ? (
+                steamData.recentGames.slice(0, 3).map((game: any) => (
+                  <p key={game.appid} style={{ color: "#ccc" }}>
+                    🎮 {game.name}
+                  </p>
+                ))
+              ) : (
+                <p style={{ color: "#777" }}>Keine letzten Spiele gefunden</p>
+              )}
+            </div>
 
             <a
               href="https://steamcommunity.com/profiles/76561199191385171/"
