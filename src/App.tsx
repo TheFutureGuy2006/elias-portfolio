@@ -13,10 +13,7 @@ function App() {
   useEffect(() => {
     fetch("/api/steam")
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Steam Daten:", data)
-        setSteamData(data)
-      })
+      .then((data) => setSteamData(data))
       .catch((error) => console.log("Steam API Fehler:", error))
   }, [])
 
@@ -47,6 +44,15 @@ function App() {
 
   return (
     <div style={pageStyle}>
+      <div className="animated-bg">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <nav style={navbarStyle}>
         <a style={navLogoStyle} href="#">
           <span className="neon-logo" style={logoGlowStyle}>
@@ -264,8 +270,14 @@ function App() {
                     🎮 {game.name}
                   </p>
                 ))
+              ) : steamData?.topGames?.length > 0 ? (
+                steamData.topGames.slice(0, 3).map((game: any) => (
+                  <p key={game.appid} style={{ color: "#ccc" }}>
+                    ⭐ {game.name}
+                  </p>
+                ))
               ) : (
-                <p style={{ color: "#777" }}>Keine letzten Spiele gefunden</p>
+                <p style={{ color: "#777" }}>Keine Spiele gefunden</p>
               )}
             </div>
 
@@ -330,6 +342,8 @@ const pageStyle = {
   background: "linear-gradient(135deg, #09090f, #12122a, #050505)",
   color: "white",
   fontFamily: "Arial, sans-serif",
+  position: "relative" as const,
+  overflow: "hidden",
 }
 
 const navbarStyle = {
@@ -433,6 +447,8 @@ const heroStyle = {
   width: "100%",
   maxWidth: "1400px",
   margin: "0 auto",
+  position: "relative" as const,
+  zIndex: 1,
 }
 
 const titleStyle = {
@@ -543,6 +559,8 @@ const smallButtonStyle = {
 const projectsSectionStyle = {
   padding: "80px 20px",
   textAlign: "center" as const,
+  position: "relative" as const,
+  zIndex: 1,
 }
 
 const sectionTitleStyle = {
@@ -595,6 +613,8 @@ const tagStyle = {
 const youtubeSectionStyle = {
   padding: "80px 20px 120px",
   textAlign: "center" as const,
+  position: "relative" as const,
+  zIndex: 1,
 }
 
 const youtubeStyle = {
