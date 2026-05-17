@@ -118,4 +118,189 @@ body,
   to {
     transform: translateY(-80px) translateX(60px) scale(1.25);
   }
+}/* ANIMATED BACKGROUND */
+
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.animated-bg span {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: floatGlow 14s infinite alternate ease-in-out;
+}
+
+.animated-bg span:nth-child(1) {
+  background: #5865f2;
+  top: 10%;
+  left: 10%;
+}
+
+.animated-bg span:nth-child(2) {
+  background: #ff00ff;
+  top: 60%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+.animated-bg span:nth-child(3) {
+  background: #00d9ff;
+  top: 20%;
+  right: 10%;
+  animation-delay: 4s;
+}
+
+.animated-bg span:nth-child(4) {
+  background: #1db954;
+  bottom: 15%;
+  right: 20%;
+  animation-delay: 6s;
+}
+
+.animated-bg span:nth-child(5) {
+  background: #ff8c00;
+  bottom: 10%;
+  left: 45%;
+  animation-delay: 8s;
+}
+
+.animated-bg span:nth-child(6) {
+  background: white;
+  top: 45%;
+  right: 45%;
+  opacity: 0.15;
+  animation-delay: 10s;
+}
+
+@keyframes floatGlow {
+  from {
+    transform: translateY(0px) translateX(0px) scale(1);
+  }
+
+  to {
+    transform: translateY(-80px) translateX(60px) scale(1.3);
+  }
+}
+
+/* SPOTIFY VISUALIZER */
+
+.spotify-visualizer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
+  height: 40px;
+  margin: 20px 0;
+}
+
+.spotify-visualizer span {
+  width: 7px;
+  border-radius: 999px;
+  background: #1db954;
+  animation: spotifyBounce 1s infinite ease-in-out;
+}
+
+.spotify-visualizer span:nth-child(1) {
+  height: 12px;
+  animation-delay: 0s;
+}
+
+.spotify-visualizer span:nth-child(2) {
+  height: 30px;
+  animation-delay: 0.15s;
+}
+
+.spotify-visualizer span:nth-child(3) {
+  height: 18px;
+  animation-delay: 0.3s;
+}
+
+.spotify-visualizer span:nth-child(4) {
+  height: 34px;
+  animation-delay: 0.45s;
+}
+
+.spotify-visualizer span:nth-child(5) {
+  height: 20px;
+  animation-delay: 0.6s;
+}
+
+@keyframes spotifyBounce {
+  0% {
+    transform: scaleY(0.5);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scaleY(1.4);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleY(0.5);
+    opacity: 0.5;
+  }
+}
+
+/* CARD HOVER */
+
+.profile-card-hover {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile-card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+
+  box-shadow:
+    0 0 35px rgba(88, 101, 242, 0.35),
+    0 0 60px rgba(255, 0, 255, 0.15);
+}
+
+/* NAVBAR HOVER */
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 0%;
+  height: 2px;
+  background: #b8b8ff;
+  box-shadow: 0 0 12px rgba(184, 184, 255, 0.9);
+  transition: 0.25s ease;
+}
+
+.nav-link:hover {
+  color: white !important;
+  text-shadow: 0 0 12px rgba(184, 184, 255, 0.9);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* NEON LOGO */
+
+.neon-logo {
+  animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+  from {
+    filter: brightness(1);
+  }
+
+  to {
+    filter: brightness(1.35);
+  }
 }

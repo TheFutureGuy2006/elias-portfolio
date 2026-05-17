@@ -21,6 +21,23 @@ function App() {
     ? `https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`
     : ""
 
+  const discordBanner =
+    discordData?.discord_user?.banner
+      ? `https://cdn.discordapp.com/banners/${discordData.discord_user.id}/${discordData.discord_user.banner}.png?size=1024`
+      : null
+
+  const currentSteamGame =
+    steamData?.profile?.gameextrainfo ||
+    steamData?.recentGames?.[0]?.name ||
+    steamData?.topGames?.[0]?.name
+
+  const currentSteamAppId =
+    steamData?.recentGames?.[0]?.appid || steamData?.topGames?.[0]?.appid
+
+  const steamGameBanner = currentSteamAppId
+    ? `https://cdn.cloudflare.steamstatic.com/steam/apps/${currentSteamAppId}/header.jpg`
+    : null
+
   const projects = [
     {
       title: "BeaconEffects Plugin",
@@ -174,7 +191,15 @@ function App() {
         </div>
 
         <div style={profileCardsRowStyle}>
-          <div style={discordCardStyle}>
+          <div className="profile-card-hover" style={discordCardStyle}>
+            {discordBanner && (
+              <img
+                src={discordBanner}
+                alt="Discord Banner"
+                style={discordBannerStyle}
+              />
+            )}
+
             {discordData ? (
               <>
                 <img src={avatar} alt="Discord Avatar" style={avatarStyle} />
@@ -221,6 +246,14 @@ function App() {
                       style={albumCoverStyle}
                     />
 
+                    <div className="spotify-visualizer">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+
                     <div style={progressBackgroundStyle}>
                       <div
                         style={{
@@ -246,7 +279,15 @@ function App() {
             )}
           </div>
 
-          <div style={steamCardStyle}>
+          <div className="profile-card-hover" style={steamCardStyle}>
+            {steamGameBanner && (
+              <img
+                src={steamGameBanner}
+                alt="Steam Game Banner"
+                style={steamBannerStyle}
+              />
+            )}
+
             <img
               src={steamData?.profile?.avatarfull || "/logo.png"}
               alt="Steam Avatar"
@@ -258,10 +299,12 @@ function App() {
             <p style={{ color: "#66c0f4", fontWeight: "bold" }}>
               {steamData?.profile?.gameextrainfo
                 ? `Spielt gerade: ${steamData.profile.gameextrainfo}`
+                : currentSteamGame
+                ? `Game Highlight: ${currentSteamGame}`
                 : "Momentan kein Spiel geöffnet"}
             </p>
 
-            <p style={{ color: "#aaa", marginTop: "15px" }}>Letzte Spiele:</p>
+            <p style={{ color: "#aaa", marginTop: "15px" }}>Spiele:</p>
 
             <div style={{ marginTop: "10px", marginBottom: "20px" }}>
               {steamData?.recentGames?.length > 0 ? (
@@ -297,7 +340,7 @@ function App() {
 
         <div style={projectGridStyle}>
           {projects.map((project) => (
-            <div style={projectCardStyle} key={project.title}>
+            <div className="profile-card-hover" style={projectCardStyle} key={project.title}>
               <h3 style={projectTitleStyle}>{project.title}</h3>
 
               <p style={projectTextStyle}>{project.description}</p>
@@ -343,7 +386,7 @@ const pageStyle = {
   color: "white",
   fontFamily: "Arial, sans-serif",
   position: "relative" as const,
-  overflow: "hidden",
+  overflowX: "hidden" as const,
 }
 
 const navbarStyle = {
@@ -506,6 +549,7 @@ const discordCardStyle = {
   maxWidth: "90vw",
   boxShadow: "0 0 30px rgba(88, 101, 242, 0.4)",
   border: "1px solid rgba(255,255,255,0.1)",
+  overflow: "hidden",
 }
 
 const steamCardStyle = {
@@ -516,6 +560,25 @@ const steamCardStyle = {
   maxWidth: "90vw",
   boxShadow: "0 0 30px rgba(102, 192, 244, 0.35)",
   border: "1px solid rgba(102,192,244,0.25)",
+  overflow: "hidden",
+}
+
+const discordBannerStyle = {
+  width: "calc(100% + 56px)",
+  height: "120px",
+  objectFit: "cover" as const,
+  margin: "-28px -28px 20px",
+  borderRadius: "20px 20px 0 0",
+  boxShadow: "0 0 25px rgba(88,101,242,0.35)",
+}
+
+const steamBannerStyle = {
+  width: "calc(100% + 56px)",
+  height: "120px",
+  objectFit: "cover" as const,
+  margin: "-28px -28px 20px",
+  borderRadius: "20px 20px 0 0",
+  boxShadow: "0 0 25px rgba(102,192,244,0.35)",
 }
 
 const avatarStyle = {
