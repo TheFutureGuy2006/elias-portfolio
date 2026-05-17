@@ -157,7 +157,7 @@ function App() {
           vieles mehr.
         </p>
 
-        <div style={buttonRowStyle}>
+        <div style={buttonContainerStyle} className="button-row">
           <a
             style={buttonStyle}
             href="https://steamcommunity.com/profiles/76561199191385171/"
@@ -187,8 +187,8 @@ function App() {
           </a>
         </div>
 
-        <div style={profileCardsRowStyle}>
-          <div className="profile-card-hover" style={discordCardStyle}>
+        <div style={profileCardsRowStyle} className="profile-cards">
+          <div style={discordCardStyle} className="profile-card">
             {discordBanner && (
               <img
                 src={discordBanner}
@@ -276,8 +276,7 @@ function App() {
             )}
           </div>
 
-          <div className="profile-card-hover" style={steamCardStyle}>
-
+          <div style={steamCardStyle} className="profile-card">
             <img
               src={steamData?.profile?.avatarfull || "/logo.png"}
               alt="Steam Avatar"
