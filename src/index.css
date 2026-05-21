@@ -41,6 +41,57 @@ img[alt="Steam Game Banner"] {
   position: relative;
 }
 
+.page-shell[data-theme="clean"] {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(102, 192, 244, 0.12), transparent 28%),
+    linear-gradient(135deg, #071013, #101923 48%, #06080b);
+}
+
+.page-shell[data-theme="minecraft"] {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(67, 181, 129, 0.2), transparent 30%),
+    radial-gradient(circle at 86% 18%, rgba(250, 166, 26, 0.12), transparent 28%),
+    linear-gradient(135deg, #071009, #142116 48%, #050805);
+}
+
+.page-shell[data-theme="clean"] .animated-bg span,
+.page-shell[data-theme="minecraft"] .animated-bg span {
+  opacity: 0.14;
+}
+
+.page-shell[data-theme="clean"] .neon-logo {
+  background: linear-gradient(135deg, #66c0f4, #8de7ff);
+  box-shadow: 0 0 18px rgba(102, 192, 244, 0.45);
+}
+
+.page-shell[data-theme="minecraft"] .neon-logo {
+  background: linear-gradient(135deg, #43b581, #d8a33d);
+  box-shadow: 0 0 18px rgba(67, 181, 129, 0.45);
+}
+
+.page-shell[data-theme="clean"] .profile-card,
+.page-shell[data-theme="clean"] .project-card,
+.page-shell[data-theme="clean"] .plugin-showcase-card,
+.page-shell[data-theme="clean"] .project-modal {
+  background: rgba(8, 15, 20, 0.94);
+  box-shadow: 0 0 28px rgba(102, 192, 244, 0.2);
+}
+
+.page-shell[data-theme="minecraft"] .profile-card,
+.page-shell[data-theme="minecraft"] .project-card,
+.page-shell[data-theme="minecraft"] .plugin-showcase-card,
+.page-shell[data-theme="minecraft"] .project-modal {
+  background: rgba(10, 20, 12, 0.94);
+  box-shadow: 0 0 28px rgba(67, 181, 129, 0.2);
+}
+
+.page-shell[data-theme="minecraft"] .eyebrow,
+.page-shell[data-theme="minecraft"] .card-kicker,
+.page-shell[data-theme="minecraft"] .game-highlight p,
+.page-shell[data-theme="minecraft"] .game-row small {
+  color: #72df8f;
+}
+
 .animated-bg {
   position: fixed;
   inset: 0;
@@ -134,7 +185,8 @@ img[alt="Steam Game Banner"] {
 .nav-links,
 .nav-profile,
 .button-row,
-.contact-links {
+.contact-links,
+.theme-toggle {
   display: flex;
   align-items: center;
 }
@@ -203,6 +255,43 @@ img[alt="Steam Game Banner"] {
   color: #cfcfff;
   font-size: 0.84rem;
   white-space: nowrap;
+}
+
+.theme-toggle {
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.theme-option {
+  min-width: 48px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #d7d7ff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.theme-option.active {
+  background: #5865f2;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(88, 101, 242, 0.45);
+}
+
+.page-shell[data-theme="clean"] .theme-option.active {
+  background: #66c0f4;
+  color: #061015;
+}
+
+.page-shell[data-theme="minecraft"] .theme-option.active {
+  background: #43b581;
+  color: #061007;
 }
 
 .status-dot {
@@ -280,7 +369,9 @@ main {
 .primary-button,
 .secondary-button,
 .small-button,
-.contact-links a {
+.contact-links a,
+.project-detail-button,
+.modal-link {
   border-radius: 12px;
   font-weight: 800;
   text-decoration: none;
@@ -709,6 +800,109 @@ main {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.project-detail-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 11px 14px;
+  border: 1px solid rgba(102, 192, 244, 0.24);
+  background: rgba(102, 192, 244, 0.1);
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.project-detail-button:hover {
+  border-color: rgba(141, 231, 255, 0.48);
+  background: rgba(102, 192, 244, 0.18);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(10px);
+}
+
+.project-modal {
+  position: relative;
+  width: min(780px, 100%);
+  max-height: min(720px, calc(100vh - 48px));
+  overflow: auto;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  background: rgba(14, 15, 31, 0.96);
+  box-shadow: 0 0 42px rgba(88, 101, 242, 0.3);
+}
+
+.project-modal h2 {
+  margin-top: 8px;
+  font-size: 2.35rem;
+  line-height: 1.1;
+}
+
+.modal-lead {
+  margin-top: 14px;
+  color: #d4d4e8;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.modal-grid h3 {
+  margin-bottom: 10px;
+}
+
+.modal-grid ul {
+  display: grid;
+  gap: 9px;
+  padding-left: 18px;
+  color: #cfd0e8;
+}
+
+.modal-grid li::marker {
+  color: #66c0f4;
+}
+
+.modal-grid p {
+  color: #d4d4e8;
+  line-height: 1.65;
+}
+
+.modal-link {
+  display: inline-flex;
+  margin-top: 16px;
+  padding: 11px 14px;
+  background: #5865f2;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
 @media (max-width: 880px) {
   .navbar {
     position: absolute;
@@ -736,6 +930,7 @@ main {
   .project-grid,
   .plugin-showcase-card,
   .showcase-shot-grid,
+  .modal-grid,
   .about-section,
   .contact-section {
     grid-template-columns: 1fr;
@@ -788,5 +983,19 @@ main {
     width: 100%;
     justify-content: center;
     text-align: center;
+  }
+
+  .theme-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .project-modal {
+    padding: 24px 18px;
+  }
+
+  .project-modal h2 {
+    padding-right: 42px;
+    font-size: 2rem;
   }
 }

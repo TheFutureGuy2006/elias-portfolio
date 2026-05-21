@@ -46,6 +46,9 @@ type Project = {
   description: string
   tags: string[]
   detail: string
+  features: string[]
+  result: string
+  showcase?: string
 }
 
 type ShowcasePlugin = {
@@ -72,6 +75,15 @@ const projects: Project[] = [
       "Minecraft Plugin mit GUI, Beacon-Effekten, Speicherung und Party-System.",
     tags: ["Minecraft", "Java", "Paper"],
     detail: "Fokus auf saubere Menüs, klare Spielerführung und stabile Serverlogik.",
+    features: [
+      "Eigene GUI zur Effektauswahl",
+      "Upgrade-Stufen per Links- und Rechtsklick",
+      "Custom Beacon Item mit Lore und Command",
+      "Speicherung für Spielerfortschritt",
+    ],
+    result:
+      "Ein Plugin, das Spielern schnell verständliche Beacon-Features gibt und trotzdem wie ein echtes Server-System wirkt.",
+    showcase: "BeaconEffects Plugin",
   },
   {
     title: "Pickaxe Plugin",
@@ -79,6 +91,15 @@ const projects: Project[] = [
     description: "Custom Pickaxe mit 1x1, 2x2 und 3x3 Mining-System über GUI.",
     tags: ["Minecraft", "Java", "GUI"],
     detail: "Gedacht für Survival- und Farm-Server mit kontrollierbaren Upgrades.",
+    features: [
+      "Multiblock-Spitzhacke mit eigenen Modi",
+      "Abbaugröße direkt im GUI auswählen",
+      "Item-Lore mit Stats und Haltbarkeit",
+      "Klare Bedienung für normale Spieler",
+    ],
+    result:
+      "Ein Mining-Tool, das sich stärker anfühlt als Vanilla, aber für Server gut kontrollierbar bleibt.",
+    showcase: "Pickaxe Plugin",
   },
   {
     title: "GTA RP Projekte",
@@ -86,6 +107,14 @@ const projects: Project[] = [
     description: "Konzepte, Bewerbungen, Taxi-Systeme, Events und RP-Dokumente.",
     tags: ["GTA RP", "FiveM", "Roleplay"],
     detail: "Strukturierte RP-Abläufe, bessere Jobs und kleine Events mit Story.",
+    features: [
+      "Job- und Event-Konzepte",
+      "RP-Bewerbungen und strukturierte Dokumente",
+      "Ideen für Taxi-Systeme und Fraktionen",
+      "Fokus auf klare Regeln und gute Spielerführung",
+    ],
+    result:
+      "Mehr Struktur für RP-Situationen, damit Spieler schneller verstehen, was sie tun können.",
   },
 ]
 
@@ -202,6 +231,8 @@ function App() {
   const [discordData, setDiscordData] = useState<DiscordData | null>(null)
   const [steamData, setSteamData] = useState<SteamData | null>(null)
   const [now, setNow] = useState(() => Date.now())
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [theme, setTheme] = useState<"neon" | "clean" | "minecraft">("neon")
 
   useEffect(() => {
     fetch("https://api.lanyard.rest/v1/users/702057545925132371")
@@ -221,6 +252,17 @@ function App() {
     const timer = window.setInterval(() => setNow(Date.now()), 1000)
     return () => window.clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    if (!selectedProject) return undefined
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedProject(null)
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [selectedProject])
 
   const avatar = discordData
     ? `https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png`
@@ -253,7 +295,7 @@ function App() {
     : 0
 
   return (
-    <div className="page-shell">
+    <div className="page-shell" data-theme={theme}>
       <div className="animated-bg" aria-hidden="true">
         <span></span>
         <span></span>
@@ -274,6 +316,19 @@ function App() {
           <a className="nav-link" href="#projects">Projekte</a>
           <a className="nav-link" href="#contact">Kontakt</a>
           <a className="nav-link" href={steamProfileUrl} target="_blank">Steam</a>
+        </div>
+
+        <div className="theme-toggle" aria-label="Theme wählen">
+          {(["neon", "clean", "minecraft"] as const).map((themeName) => (
+            <button
+              className={theme === themeName ? "theme-option active" : "theme-option"}
+              key={themeName}
+              onClick={() => setTheme(themeName)}
+              type="button"
+            >
+              {themeName === "neon" ? "Neon" : themeName === "clean" ? "Clean" : "MC"}
+            </button>
+          ))}
         </div>
 
         <div className="nav-profile">
@@ -439,6 +494,13 @@ function App() {
                     <span key={tag}>{tag}</span>
                   ))}
                 </div>
+                <button
+                  className="project-detail-button"
+                  onClick={() => setSelectedProject(project)}
+                  type="button"
+                >
+                  Details öffnen
+                </button>
               </article>
             ))}
           </div>
@@ -505,6 +567,61 @@ function App() {
           </div>
         </section>
       </main>
+
+      {selectedProject && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setSelectedProject(null)}
+          role="presentation"
+        >
+          <section
+            aria-modal="true"
+            className="project-modal"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+          >
+            <button
+              aria-label="Projekt-Details schließen"
+              className="modal-close"
+              onClick={() => setSelectedProject(null)}
+              type="button"
+            >
+              ×
+            </button>
+
+            <p className="eyebrow">{selectedProject.status}</p>
+            <h2>{selectedProject.title}</h2>
+            <p className="modal-lead">{selectedProject.description}</p>
+
+            <div className="modal-grid">
+              <div>
+                <h3>Features</h3>
+                <ul>
+                  {selectedProject.features.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h3>Ergebnis</h3>
+                <p>{selectedProject.result}</p>
+                {selectedProject.showcase && (
+                  <a className="modal-link" href="#projects" onClick={() => setSelectedProject(null)}>
+                    Showcase ansehen
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div className="tag-row">
+              {selectedProject.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   )
 }
