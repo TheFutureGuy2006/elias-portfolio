@@ -31,10 +31,6 @@ function App() {
     steamData?.recentGames?.[0]?.name ||
     steamData?.topGames?.[0]?.name
 
-  const currentSteamAppId =
-    steamData?.recentGames?.[0]?.appid || steamData?.topGames?.[0]?.appid
-
-
   const projects = [
     {
       title: "BeaconEffects Plugin",
@@ -157,7 +153,7 @@ function App() {
           vieles mehr.
         </p>
 
-        <div style={buttonContainerStyle} className="button-row">
+        <div style={buttonRowStyle} className="button-row">
           <a
             style={buttonStyle}
             href="https://steamcommunity.com/profiles/76561199191385171/"
