@@ -26,7 +26,18 @@ type SteamData = {
     avatarfull?: string
     personaname?: string
     gameextrainfo?: string
+    gameid?: string
   }
+  recentGames?: SteamGame[]
+  topGames?: SteamGame[]
+  currentGame?: SteamGame
+}
+
+type SteamGame = {
+  appid: number
+  name: string
+  playtime_forever?: number
+  playtime_2weeks?: number
 }
 
 type Project = {
@@ -35,6 +46,18 @@ type Project = {
   description: string
   tags: string[]
   detail: string
+}
+
+type ShowcasePlugin = {
+  title: string
+  status: string
+  description: string
+  highlights: string[]
+  screenshots: {
+    title: string
+    src: string
+    alt: string
+  }[]
 }
 
 const steamProfileUrl = "https://steamcommunity.com/profiles/76561199191385171/"
@@ -77,11 +100,70 @@ const skills = [
   "UI Design",
 ]
 
+const pluginShowcases: ShowcasePlugin[] = [
+  {
+    title: "BeaconEffects Plugin",
+    status: "Screenshots vorbereitet",
+    description:
+      "Ein Minecraft Beacon-Plugin mit Effekt-Auswahl, Upgrade-Stufen und einem eigenen Item-Look.",
+    highlights: [
+      "GUI zur Effektauswahl",
+      "Linksklick/Rechtsklick-Stufen",
+      "Custom Item mit Lore und Commands",
+    ],
+    screenshots: [
+      {
+        title: "Upgrade-Hinweis",
+        src: "/showcase/beacon-tooltip.png",
+        alt: "BeaconEffects Tooltip mit Linksklick und Rechtsklick Stufen",
+      },
+      {
+        title: "Effekt-Auswahl",
+        src: "/showcase/beacon-gui.png",
+        alt: "BeaconEffects GUI zur Auswahl eines Effekts",
+      },
+      {
+        title: "Custom Item",
+        src: "/showcase/beacon-item.png",
+        alt: "Effect Beacon Item mit Lore und Command Info",
+      },
+    ],
+  },
+  {
+    title: "Pickaxe Plugin",
+    status: "Screenshots vorbereitet",
+    description:
+      "Multiblock-Spitzhacke mit Item-Lore, Stack-Anzeige und GUI zur Auswahl der Abbaugröße.",
+    highlights: [
+      "1x1, 2x2 und 3x3 Mining",
+      "Abbaugröße über GUI auswählbar",
+      "Custom Diamond Pickaxe mit Stats und Haltbarkeit",
+    ],
+    screenshots: [
+      {
+        title: "Multiblock-Spitzhacke",
+        src: "/showcase/pickaxe-item.png",
+        alt: "Multiblock-Spitzhacke Item mit Stats und Haltbarkeit",
+      },
+      {
+        title: "Stack-Anzeige",
+        src: "/showcase/pickaxe-stack.png",
+        alt: "Multiblock-Spitzhacke Stack Anzeige im Inventar",
+      },
+      {
+        title: "Abbaugröße wählen",
+        src: "/showcase/pickaxe-gui.png",
+        alt: "GUI zum Auswählen der Abbaugröße",
+      },
+    ],
+  },
+]
+
 const customSteamGames = [
-  { name: "FiveM", detail: "GTA RP", icon: "🚓" },
-  { name: "Apex Legends", detail: "Battle Royale", icon: "🎯" },
-  { name: "Bloons TD", detail: "Tower Defense", icon: "🎈" },
-  { name: "NFS Heat", detail: "Racing", icon: "🏁" },
+  { name: "FiveM", detail: "GTA RP", hours: "1.250 h", icon: "🚓" },
+  { name: "Apex Legends", detail: "Battle Royale", hours: "420 h", icon: "🎯" },
+  { name: "Bloons TD", detail: "Tower Defense", hours: "85 h", icon: "🎈" },
+  { name: "NFS Heat", detail: "Racing", hours: "65 h", icon: "🏁" },
 ]
 
 const statusLabels = {
@@ -89,6 +171,31 @@ const statusLabels = {
   idle: "Abwesend",
   dnd: "Bitte nicht stören",
   offline: "Offline",
+}
+
+const formatHours = (minutes?: number) => {
+  if (!minutes) return null
+  return `${Math.round(minutes / 60)} h`
+}
+
+function ShowcaseShot({
+  title,
+  src,
+  alt,
+}: ShowcasePlugin["screenshots"][number]) {
+  return (
+    <figure className="showcase-shot" data-placeholder={`${title} Bild folgt`}>
+      <img
+        src={src}
+        alt={alt}
+        onError={(event) => {
+          event.currentTarget.style.display = "none"
+          event.currentTarget.parentElement?.classList.add("shot-missing")
+        }}
+      />
+      <figcaption>{title}</figcaption>
+    </figure>
+  )
 }
 
 function App() {
@@ -126,6 +233,12 @@ function App() {
   const currentSteamGame =
     steamData?.profile?.gameextrainfo ||
     customSteamGames[0].name
+  const matchedCurrentGame =
+    steamData?.currentGame ||
+    steamData?.recentGames?.find((game) => game.name === currentSteamGame) ||
+    steamData?.topGames?.find((game) => game.name === currentSteamGame)
+  const currentGameTotal = formatHours(matchedCurrentGame?.playtime_forever)
+  const currentGameRecent = formatHours(matchedCurrentGame?.playtime_2weeks)
 
   const spotifyProgress = discordData?.spotify
     ? Math.min(
@@ -250,7 +363,14 @@ function App() {
                 <div>
                   <p>{steamData?.profile?.gameextrainfo ? "Aktuell online" : "Game Highlight"}</p>
                   <strong>{currentSteamGame}</strong>
-                  <span>{customSteamGames[0].detail}</span>
+                  {steamData?.profile?.gameextrainfo ? (
+                    <span>
+                      {currentGameTotal ? `Gesamtzeit: ${currentGameTotal}` : "Gesamtzeit nicht verfügbar"}
+                      {currentGameRecent ? ` • Letzte 2 Wochen: ${currentGameRecent}` : ""}
+                    </span>
+                  ) : (
+                    <span>{customSteamGames[0].detail} • {customSteamGames[0].hours}</span>
+                  )}
                 </div>
               </div>
 
@@ -258,11 +378,14 @@ function App() {
                 <p className="card-kicker">Custom Games</p>
                 {customSteamGames.map((game) => (
                   <div className="game-row" key={game.name}>
-                    <span>
+                    <span className="game-copy">
                       <b>{game.icon}</b>
-                      {game.name}
+                      <span>
+                        {game.name}
+                        <em>{game.detail}</em>
+                      </span>
                     </span>
-                    <small>{game.detail}</small>
+                    <small>{game.hours}</small>
                   </div>
                 ))}
               </div>
@@ -314,6 +437,43 @@ function App() {
                 <div className="tag-row">
                   {project.tags.map((tag) => (
                     <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="content-section plugin-showcase-section">
+          <div className="section-heading">
+            <p className="eyebrow">Plugin Screenshots</p>
+            <h2>Minecraft Showcases</h2>
+          </div>
+
+          <div className="plugin-showcase-grid">
+            {pluginShowcases.map((plugin) => (
+              <article className="plugin-showcase-card" key={plugin.title}>
+                <div className="plugin-showcase-copy">
+                  <div className="project-topline">
+                    <span>{plugin.status}</span>
+                  </div>
+                  <h3>{plugin.title}</h3>
+                  <p>{plugin.description}</p>
+                  <ul>
+                    {plugin.highlights.map((highlight) => (
+                      <li key={highlight}>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="showcase-shot-grid">
+                  {plugin.screenshots.map((screenshot) => (
+                    <ShowcaseShot
+                      key={screenshot.src}
+                      title={screenshot.title}
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                    />
                   ))}
                 </div>
               </article>
