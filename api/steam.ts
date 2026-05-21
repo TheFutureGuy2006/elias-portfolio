@@ -1,6 +1,24 @@
 import "dotenv/config"
 
-export default async function handler(req: any, res: any) {
+type VercelResponse = {
+  status: (code: number) => {
+    json: (body: unknown) => void
+  }
+}
+
+type SteamGame = {
+  appid: number
+  name: string
+  playtime_forever: number
+}
+
+type OwnedGamesResponse = {
+  response: {
+    games?: SteamGame[]
+  }
+}
+
+export default async function handler(_req: unknown, res: VercelResponse) {
   const apiKey = process.env.STEAM_API_KEY
   const steamId = "76561199191385171"
 
@@ -23,12 +41,12 @@ export default async function handler(req: any, res: any) {
 
     const profileData = await profileResponse.json()
     const recentData = await recentResponse.json()
-    const ownedData = await ownedResponse.json()
+    const ownedData = (await ownedResponse.json()) as OwnedGamesResponse
 
     const ownedGames = ownedData.response.games || []
 
     const topGames = ownedGames
-      .sort((a: any, b: any) => b.playtime_forever - a.playtime_forever)
+      .sort((a, b) => b.playtime_forever - a.playtime_forever)
       .slice(0, 5)
 
     res.status(200).json({
@@ -36,7 +54,7 @@ export default async function handler(req: any, res: any) {
       recentGames: recentData.response.games || [],
       topGames,
     })
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: "Steam API Fehler" })
   }
 }
