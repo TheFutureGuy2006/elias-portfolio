@@ -630,7 +630,8 @@ main {
 }
 
 .skills-grid span,
-.tag-row span {
+.tag-row span,
+.badge-row span {
   border: 1px solid rgba(141, 231, 255, 0.18);
   border-radius: 999px;
   background: rgba(141, 231, 255, 0.08);
@@ -649,6 +650,12 @@ main {
   gap: 20px;
 }
 
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
 .plugin-showcase-grid {
   display: grid;
   gap: 24px;
@@ -656,9 +663,19 @@ main {
 
 .project-card {
   padding: 24px;
+  display: flex;
+  flex-direction: column;
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease;
+}
+
+.faq-card {
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(14, 15, 31, 0.82);
+  box-shadow: 0 0 26px rgba(88, 101, 242, 0.16);
 }
 
 .plugin-showcase-card {
@@ -696,6 +713,16 @@ main {
   margin: 12px 0;
   color: #d4d4e8;
   line-height: 1.55;
+}
+
+.faq-card h3 {
+  font-size: 1.12rem;
+}
+
+.faq-card p {
+  margin-top: 10px;
+  color: #d4d4e8;
+  line-height: 1.65;
 }
 
 .plugin-showcase-copy p {
@@ -761,27 +788,31 @@ main {
   text-align: center;
 }
 
-.tag-row {
+.tag-row,
+.badge-row {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
+}
+
+.tag-row {
   margin-top: 18px;
 }
 
-.tag-row span {
+.badge-row {
+  margin-top: 16px;
+}
+
+.tag-row span,
+.badge-row span {
   padding: 7px 10px;
   font-size: 0.8rem;
 }
 
-.media-section iframe {
-  display: block;
-  width: min(760px, 100%);
-  aspect-ratio: 16 / 9;
-  height: auto;
-  margin: 0 auto;
-  border: 0;
-  border-radius: 18px;
-  box-shadow: 0 0 28px rgba(255, 79, 216, 0.26);
+.badge-row span {
+  border-color: rgba(67, 181, 129, 0.24);
+  background: rgba(67, 181, 129, 0.1);
+  color: #bfffd0;
 }
 
 .contact-section {
@@ -878,6 +909,54 @@ main {
   line-height: 1.65;
 }
 
+.command-list {
+  list-style: none;
+  padding-left: 0 !important;
+}
+
+.command-list code {
+  display: inline-flex;
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid rgba(102, 192, 244, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #8de7ff;
+  font-family: "Cascadia Code", "Consolas", monospace;
+  font-size: 0.9rem;
+}
+
+.modal-result {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-result p {
+  margin-top: 8px;
+  color: #d4d4e8;
+  line-height: 1.6;
+}
+
+.modal-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #5865f2;
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
 .modal-close {
   position: absolute;
   top: 18px;
@@ -939,9 +1018,11 @@ main {
 
   .profile-grid,
   .project-grid,
+  .faq-grid,
   .plugin-showcase-card,
   .showcase-shot-grid,
   .modal-grid,
+  .modal-result,
   .about-section,
   .contact-section {
     grid-template-columns: 1fr;

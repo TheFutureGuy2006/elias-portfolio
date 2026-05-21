@@ -46,9 +46,12 @@ type Project = {
   description: string
   tags: string[]
   detail: string
+  badges: string[]
+  commands: string[]
   features: string[]
   result: string
   showcase?: string
+  ctaLabel: string
 }
 
 type ShowcasePlugin = {
@@ -75,6 +78,8 @@ const projects: Project[] = [
       "Minecraft Plugin mit GUI, Beacon-Effekten, Speicherung und Party-System.",
     tags: ["Minecraft", "Java", "Paper"],
     detail: "Fokus auf saubere Menüs, klare Spielerführung und stabile Serverlogik.",
+    badges: ["Paper", "GUI", "Config", "Permissions"],
+    commands: ["/beacon", "/beacon reload", "/beacon give <spieler>"],
     features: [
       "Eigene GUI zur Effektauswahl",
       "Upgrade-Stufen per Links- und Rechtsklick",
@@ -84,6 +89,7 @@ const projects: Project[] = [
     result:
       "Ein Plugin, das Spielern schnell verständliche Beacon-Features gibt und trotzdem wie ein echtes Server-System wirkt.",
     showcase: "BeaconEffects Plugin",
+    ctaLabel: "Beacon Plugin anfragen",
   },
   {
     title: "Pickaxe Plugin",
@@ -91,6 +97,8 @@ const projects: Project[] = [
     description: "Custom Pickaxe mit 1x1, 2x2 und 3x3 Mining-System über GUI.",
     tags: ["Minecraft", "Java", "GUI"],
     detail: "Gedacht für Survival- und Farm-Server mit kontrollierbaren Upgrades.",
+    badges: ["Paper", "Mining", "GUI", "Upgrades"],
+    commands: ["/pickaxe", "/pickaxe give <spieler>", "/pickaxe mode"],
     features: [
       "Multiblock-Spitzhacke mit eigenen Modi",
       "Abbaugröße direkt im GUI auswählen",
@@ -100,6 +108,7 @@ const projects: Project[] = [
     result:
       "Ein Mining-Tool, das sich stärker anfühlt als Vanilla, aber für Server gut kontrollierbar bleibt.",
     showcase: "Pickaxe Plugin",
+    ctaLabel: "Pickaxe Demo anfragen",
   },
   {
     title: "GTA RP Projekte",
@@ -107,6 +116,8 @@ const projects: Project[] = [
     description: "Konzepte, Bewerbungen, Taxi-Systeme, Events und RP-Dokumente.",
     tags: ["GTA RP", "FiveM", "Roleplay"],
     detail: "Strukturierte RP-Abläufe, bessere Jobs und kleine Events mit Story.",
+    badges: ["FiveM", "Konzept", "Roleplay", "Events"],
+    commands: ["Taxi-Konzept", "Eventplan", "Bewerbungsvorlage"],
     features: [
       "Job- und Event-Konzepte",
       "RP-Bewerbungen und strukturierte Dokumente",
@@ -115,6 +126,7 @@ const projects: Project[] = [
     ],
     result:
       "Mehr Struktur für RP-Situationen, damit Spieler schneller verstehen, was sie tun können.",
+    ctaLabel: "RP-Konzept besprechen",
   },
 ]
 
@@ -185,6 +197,29 @@ const pluginShowcases: ShowcasePlugin[] = [
         alt: "GUI zum Auswählen der Abbaugröße",
       },
     ],
+  },
+]
+
+const faqItems = [
+  {
+    question: "Sind die Plugins öffentlich downloadbar?",
+    answer:
+      "Aktuell sind sie eher Showcase- und Projektarbeiten. Wenn jemand Interesse hat, kann ich sie gezielt vorstellen oder weiter ausbauen.",
+  },
+  {
+    question: "Für welche Minecraft-Versionen sind die Plugins gedacht?",
+    answer:
+      "Der Fokus liegt auf Paper-Servern. Die genaue Version hängt vom Projektstand ab und kann später pro Plugin ergänzt werden.",
+  },
+  {
+    question: "Kann man die Plugins testen?",
+    answer:
+      "Ja, als Demo oder über Screenshots/kurze Vorstellungen. Dafür ist der Anfrage-Button bei den Projekt-Details gedacht.",
+  },
+  {
+    question: "Warum gibt es GTA RP neben Minecraft Plugins?",
+    answer:
+      "Die Seite zeigt nicht nur Code, sondern auch Konzepte und Systeme, die Spieler in Games wirklich benutzen können.",
   },
 ]
 
@@ -492,6 +527,11 @@ function App() {
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 <small>{project.detail}</small>
+                <div className="badge-row">
+                  {project.badges.map((badge) => (
+                    <span key={badge}>{badge}</span>
+                  ))}
+                </div>
                 <div className="tag-row">
                   {project.tags.map((tag) => (
                     <span key={tag}>{tag}</span>
@@ -509,16 +549,20 @@ function App() {
           </div>
         </section>
 
-        <section className="content-section media-section">
+        <section className="content-section faq-section">
           <div className="section-heading">
-            <p className="eyebrow">YouTube / Musik</p>
-            <h2>Stream zum Coden oder Zocken</h2>
+            <p className="eyebrow">FAQ</p>
+            <h2>Kurze Antworten</h2>
           </div>
-          <iframe
-            src="https://www.youtube.com/embed/jfKfPfyJRdk"
-            title="YouTube video player"
-            allowFullScreen
-          ></iframe>
+
+          <div className="faq-grid">
+            {faqItems.map((item) => (
+              <article className="faq-card" key={item.question}>
+                <h3>{item.question}</h3>
+                <p>{item.answer}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="content-section contact-section" id="contact">
@@ -570,9 +614,25 @@ function App() {
               </div>
 
               <div>
+                <h3>Commands / Inhalte</h3>
+                <ul className="command-list">
+                  {selectedProject.commands.map((command) => (
+                    <li key={command}>
+                      <code>{command}</code>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="modal-result">
+              <div>
                 <h3>Ergebnis</h3>
                 <p>{selectedProject.result}</p>
               </div>
+              <a className="modal-cta" href={discordProfileUrl} target="_blank">
+                {selectedProject.ctaLabel}
+              </a>
             </div>
 
             {selectedShowcase && (
@@ -597,6 +657,9 @@ function App() {
             )}
 
             <div className="tag-row">
+              {selectedProject.badges.map((badge) => (
+                <span key={badge}>{badge}</span>
+              ))}
               {selectedProject.tags.map((tag) => (
                 <span key={tag}>{tag}</span>
               ))}
