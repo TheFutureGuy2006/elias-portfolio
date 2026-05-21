@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 
 type DiscordData = {
   discord_status: "online" | "idle" | "dnd" | "offline"
@@ -21,21 +21,12 @@ type DiscordData = {
   }
 }
 
-type SteamGame = {
-  appid: number
-  name: string
-  playtime_forever?: number
-  playtime_2weeks?: number
-}
-
 type SteamData = {
   profile?: {
     avatarfull?: string
     personaname?: string
     gameextrainfo?: string
   }
-  recentGames?: SteamGame[]
-  topGames?: SteamGame[]
 }
 
 type Project = {
@@ -86,16 +77,18 @@ const skills = [
   "UI Design",
 ]
 
+const customSteamGames = [
+  { name: "FiveM", detail: "GTA RP", icon: "🚓" },
+  { name: "Apex Legends", detail: "Battle Royale", icon: "🎯" },
+  { name: "Bloons TD", detail: "Tower Defense", icon: "🎈" },
+  { name: "NFS Heat", detail: "Racing", icon: "🏁" },
+]
+
 const statusLabels = {
   online: "Online",
   idle: "Abwesend",
   dnd: "Bitte nicht stören",
   offline: "Offline",
-}
-
-const formatHours = (minutes?: number) => {
-  if (!minutes) return "0 h"
-  return `${Math.round(minutes / 60)} h`
 }
 
 function App() {
@@ -132,15 +125,7 @@ function App() {
 
   const currentSteamGame =
     steamData?.profile?.gameextrainfo ||
-    steamData?.recentGames?.[0]?.name ||
-    steamData?.topGames?.[0]?.name ||
-    "Kein Spiel erkannt"
-
-  const featuredGame = steamData?.recentGames?.[0] || steamData?.topGames?.[0]
-  const listedGames = useMemo(
-    () => (steamData?.recentGames?.length ? steamData.recentGames : steamData?.topGames || []),
-    [steamData],
-  )
+    customSteamGames[0].name
 
   const spotifyProgress = discordData?.spotify
     ? Math.min(
@@ -261,23 +246,25 @@ function App() {
               </div>
 
               <div className="game-highlight">
-                <span className="game-icon">🎮</span>
+                <span className="game-icon">{customSteamGames[0].icon}</span>
                 <div>
                   <p>{steamData?.profile?.gameextrainfo ? "Aktuell online" : "Game Highlight"}</p>
                   <strong>{currentSteamGame}</strong>
-                  {featuredGame && <span>{formatHours(featuredGame.playtime_forever)} insgesamt</span>}
+                  <span>{customSteamGames[0].detail}</span>
                 </div>
               </div>
 
               <div className="game-list">
-                <p className="card-kicker">Spiele</p>
-                {listedGames.slice(0, 4).map((game) => (
-                  <div className="game-row" key={game.appid}>
-                    <span>{game.name}</span>
-                    <small>{formatHours(game.playtime_forever)}</small>
+                <p className="card-kicker">Custom Games</p>
+                {customSteamGames.map((game) => (
+                  <div className="game-row" key={game.name}>
+                    <span>
+                      <b>{game.icon}</b>
+                      {game.name}
+                    </span>
+                    <small>{game.detail}</small>
                   </div>
                 ))}
-                {!listedGames.length && <p className="muted-text">Keine Spiele gefunden.</p>}
               </div>
 
               <a className="small-button" href={steamProfileUrl} target="_blank">Steam öffnen</a>
