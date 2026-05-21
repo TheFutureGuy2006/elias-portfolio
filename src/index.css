@@ -426,13 +426,26 @@ main {
 }
 
 .discord-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
   position: relative;
 }
 
-.discord-banner {
+.discord-cover {
   width: calc(100% + 56px);
-  height: 128px;
-  margin: -28px -28px 18px;
+  height: 120px;
+  margin: -28px -28px 0;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  background:
+    radial-gradient(circle at 22% 35%, rgba(88, 101, 242, 0.38), transparent 32%),
+    linear-gradient(135deg, rgba(102, 192, 244, 0.16), rgba(255, 79, 216, 0.1));
+}
+
+.discord-banner {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -442,6 +455,11 @@ main {
   border: 3px solid #5865f2;
   border-radius: 999px;
   object-fit: cover;
+}
+
+.discord-card > .profile-avatar {
+  margin-top: -50px;
+  box-shadow: 0 0 0 8px rgba(14, 15, 31, 0.95);
 }
 
 .steam-avatar {
@@ -483,6 +501,63 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.11);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.06);
+}
+
+.discord-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.discord-stats div {
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.discord-stats span,
+.discord-note p:last-child {
+  color: #b8b8cc;
+}
+
+.discord-stats span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.discord-stats strong {
+  display: block;
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 0.95rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discord-note {
+  margin-top: 18px;
+  padding: 14px;
+  border-left: 3px solid #5865f2;
+  border-radius: 12px;
+  background: rgba(88, 101, 242, 0.09);
+}
+
+.discord-note p:last-child {
+  margin-top: 6px;
+  line-height: 1.55;
+}
+
+.discord-card .spotify-panel,
+.discord-card .muted-text {
+  margin-top: auto;
+}
+
+.discord-card .muted-text {
+  padding-top: 22px;
 }
 
 .spotify-panel img {
@@ -1062,8 +1137,13 @@ main {
   }
 
   .discord-banner {
+    width: 100%;
+    margin: 0;
+  }
+
+  .discord-cover {
     width: calc(100% + 40px);
-    margin: -20px -20px 18px;
+    margin: -20px -20px 0;
   }
 
   .card-heading-row {
@@ -1075,6 +1155,10 @@ main {
     width: 100%;
     justify-content: center;
     text-align: center;
+  }
+
+  .discord-stats {
+    grid-template-columns: 1fr;
   }
 
   .theme-toggle {

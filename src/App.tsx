@@ -400,9 +400,11 @@ function App() {
 
           <div className="profile-grid">
             <section className="profile-card discord-card">
-              {discordBanner && (
-                <img className="discord-banner" src={discordBanner} alt="Discord Banner" />
-              )}
+              <div className="discord-cover">
+                {discordBanner && (
+                  <img className="discord-banner" src={discordBanner} alt="Discord Banner" />
+                )}
+              </div>
 
               <img className="profile-avatar" src={avatar} alt="Discord Avatar" />
               <div className="card-heading-row">
@@ -413,6 +415,34 @@ function App() {
                 <span className={`status-pill status-${discordData?.discord_status || "offline"}`}>
                   {discordData ? statusLabels[discordData.discord_status] : "Lädt"}
                 </span>
+              </div>
+
+              <div className="discord-stats">
+                <div>
+                  <span>Status</span>
+                  <strong>{discordData ? statusLabels[discordData.discord_status] : "Lädt"}</strong>
+                </div>
+                <div>
+                  <span>Aktivität</span>
+                  <strong>
+                    {discordData?.listening_to_spotify
+                      ? "Spotify"
+                      : discordData?.discord_status === "offline"
+                      ? "Offline"
+                      : "Online"}
+                  </strong>
+                </div>
+                <div>
+                  <span>Profil</span>
+                  <strong>Discord</strong>
+                </div>
+              </div>
+
+              <div className="discord-note">
+                <p className="card-kicker">Live Presence</p>
+                <p>
+                  Discord zeigt hier automatisch Status und Musik, sobald Lanyard Daten liefert.
+                </p>
               </div>
 
               {discordData?.listening_to_spotify && discordData.spotify ? (
