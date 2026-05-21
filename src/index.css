@@ -370,8 +370,7 @@ main {
 .secondary-button,
 .small-button,
 .contact-links a,
-.project-detail-button,
-.modal-link {
+.project-detail-button {
   border-radius: 12px;
   font-weight: 800;
   text-decoration: none;
@@ -879,13 +878,6 @@ main {
   line-height: 1.65;
 }
 
-.modal-link {
-  display: inline-flex;
-  margin-top: 16px;
-  padding: 11px 14px;
-  background: #5865f2;
-}
-
 .modal-close {
   position: absolute;
   top: 18px;
@@ -901,6 +893,25 @@ main {
   cursor: pointer;
   font-size: 1.5rem;
   line-height: 1;
+}
+
+.modal-showcase {
+  display: grid;
+  gap: 16px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-showcase h3 {
+  margin-top: 6px;
+  font-size: 1.45rem;
+}
+
+.modal-showcase p:not(.eyebrow) {
+  margin-top: 8px;
+  color: #d4d4e8;
+  line-height: 1.6;
 }
 
 @media (max-width: 880px) {

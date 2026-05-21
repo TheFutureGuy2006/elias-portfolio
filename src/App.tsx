@@ -281,6 +281,9 @@ function App() {
     steamData?.topGames?.find((game) => game.name === currentSteamGame)
   const currentGameTotal = formatHours(matchedCurrentGame?.playtime_forever)
   const currentGameRecent = formatHours(matchedCurrentGame?.playtime_2weeks)
+  const selectedShowcase = selectedProject?.showcase
+    ? pluginShowcases.find((plugin) => plugin.title === selectedProject.showcase)
+    : undefined
 
   const spotifyProgress = discordData?.spotify
     ? Math.min(
@@ -506,43 +509,6 @@ function App() {
           </div>
         </section>
 
-        <section className="content-section plugin-showcase-section">
-          <div className="section-heading">
-            <p className="eyebrow">Plugin Screenshots</p>
-            <h2>Minecraft Showcases</h2>
-          </div>
-
-          <div className="plugin-showcase-grid">
-            {pluginShowcases.map((plugin) => (
-              <article className="plugin-showcase-card" key={plugin.title}>
-                <div className="plugin-showcase-copy">
-                  <div className="project-topline">
-                    <span>{plugin.status}</span>
-                  </div>
-                  <h3>{plugin.title}</h3>
-                  <p>{plugin.description}</p>
-                  <ul>
-                    {plugin.highlights.map((highlight) => (
-                      <li key={highlight}>{highlight}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="showcase-shot-grid">
-                  {plugin.screenshots.map((screenshot) => (
-                    <ShowcaseShot
-                      key={screenshot.src}
-                      title={screenshot.title}
-                      src={screenshot.src}
-                      alt={screenshot.alt}
-                    />
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="content-section media-section">
           <div className="section-heading">
             <p className="eyebrow">YouTube / Musik</p>
@@ -606,13 +572,29 @@ function App() {
               <div>
                 <h3>Ergebnis</h3>
                 <p>{selectedProject.result}</p>
-                {selectedProject.showcase && (
-                  <a className="modal-link" href="#projects" onClick={() => setSelectedProject(null)}>
-                    Showcase ansehen
-                  </a>
-                )}
               </div>
             </div>
+
+            {selectedShowcase && (
+              <div className="modal-showcase">
+                <div>
+                  <p className="eyebrow">Plugin Screenshots</p>
+                  <h3>{selectedShowcase.title}</h3>
+                  <p>{selectedShowcase.description}</p>
+                </div>
+
+                <div className="showcase-shot-grid">
+                  {selectedShowcase.screenshots.map((screenshot) => (
+                    <ShowcaseShot
+                      key={screenshot.src}
+                      title={screenshot.title}
+                      src={screenshot.src}
+                      alt={screenshot.alt}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="tag-row">
               {selectedProject.tags.map((tag) => (
