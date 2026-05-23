@@ -128,11 +128,70 @@ const projects: Project[] = [
       "Mehr Struktur für RP-Situationen, damit Spieler schneller verstehen, was sie tun können.",
     ctaLabel: "RP-Konzept besprechen",
   },
+  {
+    title: "MinecartSpeed",
+    status: "Fertig / Testbereit",
+    description:
+      "Paper Plugin, mit dem Minecarts schneller und kontrollierter fahren können.",
+    tags: ["Minecraft", "Java", "Paper"],
+    detail: "Mehr Tempo für Schienen-Systeme, ohne direkt die Serverlogik zu überladen.",
+    badges: ["Paper", "Minecart", "Config", "Performance"],
+    commands: ["/minecartspeed", "/minecartspeed reload", "/minecartspeed set <speed>"],
+    features: [
+      "Konfigurierbare Minecart-Geschwindigkeit",
+      "Reload-Command für schnelle Anpassungen",
+      "Serverfreundliche Logik für Schienenstrecken",
+      "Ideal für Citybuild-, Survival- und Transport-Systeme",
+    ],
+    result:
+      "Minecart-Strecken fühlen sich schneller und nützlicher an, bleiben aber für den Server gut kontrollierbar.",
+    ctaLabel: "MinecartSpeed anfragen",
+  },
+  {
+    title: "BannerPattern Loader",
+    status: "Utility Plugin",
+    description:
+      "Plugin zum Laden und Verwalten von Banner-Patterns für Minecraft-Server.",
+    tags: ["Minecraft", "Java", "Utility"],
+    detail: "Gedacht für Server, die Banner-Designs sauber bereitstellen oder erweitern wollen.",
+    badges: ["Paper", "Banner", "Loader", "Utility"],
+    commands: ["/bannerpattern", "/bannerpattern reload", "/bannerpattern list"],
+    features: [
+      "Banner-Patterns zentral laden",
+      "Reload ohne kompletten Server-Neustart",
+      "Übersicht über verfügbare Patterns",
+      "Sauberer Utility-Ansatz für Admins und Builder",
+    ],
+    result:
+      "Banner-Designs lassen sich einfacher organisieren und für Builder oder Server-Teams nutzbar machen.",
+    ctaLabel: "BannerPattern Loader anfragen",
+  },
+  {
+    title: "Angler Plugin",
+    status: "In Entwicklung",
+    description:
+      "Fishing Plugin mit Angler-Features, Belohnungen und mehr Motivation beim Fischen.",
+    tags: ["Minecraft", "Java", "Fishing"],
+    detail: "Mehr Gameplay für Spieler, die auf Survival-Servern gerne farmen und sammeln.",
+    badges: ["Paper", "Fishing", "Rewards", "Gameplay"],
+    commands: ["/angler", "/angler stats", "/angler reload"],
+    features: [
+      "Angler-System mit eigenen Fortschritten",
+      "Statistiken für Spieler",
+      "Belohnungen und mögliche seltene Fänge",
+      "Reload-Command für Admins",
+    ],
+    result:
+      "Fischen wird mehr als nur Nebenbeschäftigung und bekommt ein eigenes kleines Progressionsgefühl.",
+    ctaLabel: "Angler Plugin anfragen",
+  },
 ]
 
 const skills = [
   "Java",
   "Minecraft Paper",
+  "Plugin Configs",
+  "Server Tools",
   "React",
   "TypeScript",
   "FiveM",
@@ -215,6 +274,11 @@ const faqItems = [
     question: "Kann man die Plugins testen?",
     answer:
       "Ja, als Demo oder über Screenshots/kurze Vorstellungen. Dafür ist der Anfrage-Button bei den Projekt-Details gedacht.",
+  },
+  {
+    question: "Warum sind hier verschiedene Plugin-Arten gemischt?",
+    answer:
+      "Die Seite zeigt unterschiedliche Minecraft-Systeme: Utility, Gameplay und kleine Server-Verbesserungen.",
   },
   {
     question: "Warum gibt es GTA RP neben Minecraft Plugins?",
@@ -524,9 +588,9 @@ function App() {
             <h2>Ich mag Projekte, die man wirklich benutzen kann.</h2>
           </div>
           <p>
-            Meine Seite verbindet Coding, Gaming und Roleplay. Besonders spannend
-            finde ich Minecraft-Plugins mit klaren GUIs, kleine Web-Tools und
-            RP-Systeme, die Spielern mehr Möglichkeiten geben.
+            Meine Seite verbindet Coding, Gaming, Minecraft-Server-Systeme und
+            Roleplay. Besonders spannend finde ich Paper-Plugins, kleine
+            Web-Tools und Features, die Spielern direkt mehr Möglichkeiten geben.
           </p>
         </section>
 
