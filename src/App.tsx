@@ -168,21 +168,29 @@ const projects: Project[] = [
   },
   {
     title: "Angler Plugin",
-    status: "In Entwicklung",
+    status: "Aktiv erweitert",
     description:
-      "Fishing Plugin mit Angler-Features, Belohnungen und mehr Motivation beim Fischen.",
-    tags: ["Minecraft", "Java", "Fishing"],
-    detail: "Mehr Gameplay für Spieler, die auf Survival-Servern gerne farmen und sammeln.",
-    badges: ["Paper", "Fishing", "Rewards", "Gameplay"],
-    commands: ["/angler", "/angler stats", "/angler reload"],
+      "Fishing Plugin mit Level-System, Belohnungen, Statistiken und mehr Motivation beim Fischen.",
+    tags: ["Minecraft", "Java", "Fishing", "Progression"],
+    detail: "Ein eigenes Angler-System für Survival-Server mit Fortschritt, seltenen Fängen und Admin-Steuerung.",
+    badges: ["Paper", "Fishing", "Levels", "Rewards", "Stats", "Config"],
+    commands: [
+      "/angler",
+      "/angler stats",
+      "/angler top",
+      "/angler rewards",
+      "/angler reload",
+    ],
     features: [
-      "Angler-System mit eigenen Fortschritten",
-      "Statistiken für Spieler",
-      "Belohnungen und mögliche seltene Fänge",
-      "Reload-Command für Admins",
+      "Angler-Level und Fortschritt für Spieler",
+      "Statistiken für Fänge, Aktivität und Fortschritt",
+      "Belohnungen für seltene Fänge und aktive Spieler",
+      "Leaderboard für die besten Angler",
+      "Config- und Reload-System für Admins",
+      "Gute Grundlage für Quests, Events oder Angel-Wettbewerbe",
     ],
     result:
-      "Fischen wird mehr als nur Nebenbeschäftigung und bekommt ein eigenes kleines Progressionsgefühl.",
+      "Fischen wird zu einem eigenen Gameplay-System: Spieler haben Ziele, können Fortschritt sehen und bekommen einen Grund, öfter zur Angel zu greifen.",
     ctaLabel: "Angler Plugin anfragen",
   },
 ]
@@ -274,6 +282,11 @@ const faqItems = [
     question: "Kann man die Plugins testen?",
     answer:
       "Ja, als Demo oder über Screenshots/kurze Vorstellungen. Dafür ist der Anfrage-Button bei den Projekt-Details gedacht.",
+  },
+  {
+    question: "Was macht das Angler Plugin besonders?",
+    answer:
+      "Es macht aus normalem Fischen ein kleines Progressionssystem mit Stats, Belohnungen, Leveln und möglichen Wettbewerben für Survival-Server.",
   },
   {
     question: "Warum sind hier verschiedene Plugin-Arten gemischt?",
