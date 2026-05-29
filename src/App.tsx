@@ -46,6 +46,7 @@ type Project = {
   description: string
   tags: string[]
   detail: string
+  category: "plugin" | "utility" | "concept"
   badges: string[]
   commands: string[]
   features: string[]
@@ -66,9 +67,18 @@ type ShowcasePlugin = {
   }[]
 }
 
+type ProjectCategory = "all" | Project["category"]
+
 const steamProfileUrl = "https://steamcommunity.com/profiles/76561199191385171/"
 const discordProfileUrl = "https://discord.com/users/702057545925132371"
 const twitchProfileUrl = "https://www.twitch.tv/thefutureguy2006/"
+
+const projectCategories: { label: string; value: ProjectCategory }[] = [
+  { label: "Alle", value: "all" },
+  { label: "Plugins", value: "plugin" },
+  { label: "Utilities", value: "utility" },
+  { label: "Konzepte", value: "concept" },
+]
 
 const projects: Project[] = [
   {
@@ -78,6 +88,7 @@ const projects: Project[] = [
       "Minecraft Plugin mit GUI, Beacon-Effekten, Speicherung und Party-System.",
     tags: ["Minecraft", "Java", "Paper"],
     detail: "Fokus auf saubere Menüs, klare Spielerführung und stabile Serverlogik.",
+    category: "plugin",
     badges: ["Paper", "GUI", "Config", "Permissions"],
     commands: ["/beacon", "/beacon reload", "/beacon give <spieler>"],
     features: [
@@ -92,21 +103,23 @@ const projects: Project[] = [
     ctaLabel: "Beacon Plugin anfragen",
   },
   {
-    title: "Pickaxe Plugin",
-    status: "Konzept + Tests",
-    description: "Custom Pickaxe mit 1x1, 2x2 und 3x3 Mining-System über GUI.",
+    title: "Custom Pickaxe Plugin",
+    status: "Aktiv überarbeitet",
+    description:
+      "Custom Pickaxe mit Mining-Modi, Item-Lore und GUI zur Auswahl der Abbaugröße.",
     tags: ["Minecraft", "Java", "GUI"],
-    detail: "Gedacht für Survival- und Farm-Server mit kontrollierbaren Upgrades.",
+    detail: "Gedacht für Survival- und Farm-Server mit klaren Mining-Modi und kontrollierbaren Upgrades.",
+    category: "plugin",
     badges: ["Paper", "Mining", "GUI", "Upgrades"],
     commands: ["/pickaxe", "/pickaxe give <spieler>", "/pickaxe mode"],
     features: [
-      "Multiblock-Spitzhacke mit eigenen Modi",
-      "Abbaugröße direkt im GUI auswählen",
-      "Item-Lore mit Stats und Haltbarkeit",
-      "Klare Bedienung für normale Spieler",
+      "Multiblock-Spitzhacke mit eigenen Abbaugrößen",
+      "GUI-Auswahl für 1x1, 2x2 und 3x3 Mining",
+      "Item-Lore mit Stats, Haltbarkeit und Stack-Anzeige",
+      "Klare Bedienung für normale Spieler und Admins",
     ],
     result:
-      "Ein Mining-Tool, das sich stärker anfühlt als Vanilla, aber für Server gut kontrollierbar bleibt.",
+      "Ein Mining-Tool, das sich stärker als Vanilla anfühlt, aber durch Modi, GUI und Commands für Server gut kontrollierbar bleibt.",
     showcase: "Pickaxe Plugin",
     ctaLabel: "Pickaxe Demo anfragen",
   },
@@ -116,6 +129,7 @@ const projects: Project[] = [
     description: "Konzepte, Bewerbungen, Taxi-Systeme, Events und RP-Dokumente.",
     tags: ["GTA RP", "FiveM", "Roleplay"],
     detail: "Strukturierte RP-Abläufe, bessere Jobs und kleine Events mit Story.",
+    category: "concept",
     badges: ["FiveM", "Konzept", "Roleplay", "Events"],
     commands: ["Taxi-Konzept", "Eventplan", "Bewerbungsvorlage"],
     features: [
@@ -135,6 +149,7 @@ const projects: Project[] = [
       "Paper Plugin, mit dem Minecarts schneller und kontrollierter fahren können.",
     tags: ["Minecraft", "Java", "Paper"],
     detail: "Mehr Tempo für Schienen-Systeme, ohne direkt die Serverlogik zu überladen.",
+    category: "plugin",
     badges: ["Paper", "Minecart", "Config", "Performance"],
     commands: ["/minecartspeed", "/minecartspeed reload", "/minecartspeed set <speed>"],
     features: [
@@ -154,6 +169,7 @@ const projects: Project[] = [
       "Plugin zum Laden und Verwalten von Banner-Patterns für Minecraft-Server.",
     tags: ["Minecraft", "Java", "Utility"],
     detail: "Gedacht für Server, die Banner-Designs sauber bereitstellen oder erweitern wollen.",
+    category: "utility",
     badges: ["Paper", "Banner", "Loader", "Utility"],
     commands: ["/bannerpattern", "/bannerpattern reload", "/bannerpattern list"],
     features: [
@@ -173,6 +189,7 @@ const projects: Project[] = [
       "Fishing Plugin mit Level-System, Belohnungen, Statistiken und mehr Motivation beim Fischen.",
     tags: ["Minecraft", "Java", "Fishing", "Progression"],
     detail: "Ein eigenes Angler-System für Survival-Server mit Fortschritt, seltenen Fängen und Admin-Steuerung.",
+    category: "plugin",
     badges: ["Paper", "Fishing", "Levels", "Rewards", "Stats", "Config"],
     commands: [
       "/angler",
@@ -192,6 +209,34 @@ const projects: Project[] = [
     result:
       "Fischen wird zu einem eigenen Gameplay-System: Spieler haben Ziele, können Fortschritt sehen und bekommen einen Grund, öfter zur Angel zu greifen.",
     ctaLabel: "Angler Plugin anfragen",
+  },
+  {
+    title: "Battle Pass Plugin",
+    status: "Analytics-System",
+    description:
+      "Battle-Pass Plugin mit Fortschritt, Belohnungen und Analytics-System für Spieleraktivität.",
+    tags: ["Minecraft", "Java", "Battle Pass", "Analytics"],
+    detail:
+      "Ein Progression-System für Server, das Aktivität, Aufgaben und Belohnungen messbar macht.",
+    category: "plugin",
+    badges: ["Paper", "Battle Pass", "Analytics", "Rewards", "Progression"],
+    commands: [
+      "/battlepass",
+      "/battlepass progress",
+      "/battlepass rewards",
+      "/battlepass analytics",
+      "/battlepass reload",
+    ],
+    features: [
+      "Battle-Pass Fortschritt für Spieler",
+      "Belohnungen und freischaltbare Stufen",
+      "Analytics-System für Aktivität und Fortschritt",
+      "Admin-Reload und Auswertungs-Commands",
+      "Grundlage für Seasons, Quests oder Server-Events",
+    ],
+    result:
+      "Spieler bekommen mehr langfristige Ziele, während Admins über Analytics besser sehen können, wie aktiv das System genutzt wird.",
+    ctaLabel: "Battle Pass Plugin anfragen",
   },
 ]
 
@@ -289,6 +334,11 @@ const faqItems = [
       "Es macht aus normalem Fischen ein kleines Progressionssystem mit Stats, Belohnungen, Leveln und möglichen Wettbewerben für Survival-Server.",
   },
   {
+    question: "Was ist beim Battle Pass Plugin neu?",
+    answer:
+      "Das Battle Pass Plugin bekommt ein Analytics-System, damit Fortschritt, Aktivität und Belohnungen besser nachvollziehbar werden.",
+  },
+  {
     question: "Warum sind hier verschiedene Plugin-Arten gemischt?",
     answer:
       "Die Seite zeigt unterschiedliche Minecraft-Systeme: Utility, Gameplay und kleine Server-Verbesserungen.",
@@ -344,6 +394,8 @@ function App() {
   const [steamData, setSteamData] = useState<SteamData | null>(null)
   const [now, setNow] = useState(() => Date.now())
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [activeProjectCategory, setActiveProjectCategory] =
+    useState<ProjectCategory>("all")
   const [theme, setTheme] = useState<"neon" | "clean" | "minecraft">("neon")
 
   useEffect(() => {
@@ -396,6 +448,10 @@ function App() {
   const selectedShowcase = selectedProject?.showcase
     ? pluginShowcases.find((plugin) => plugin.title === selectedProject.showcase)
     : undefined
+  const visibleProjects =
+    activeProjectCategory === "all"
+      ? projects
+      : projects.filter((project) => project.category === activeProjectCategory)
 
   const spotifyProgress = discordData?.spotify
     ? Math.min(
@@ -625,8 +681,25 @@ function App() {
             <h2>Meine Projekte</h2>
           </div>
 
+          <div className="project-tabs" aria-label="Projektfilter">
+            {projectCategories.map((category) => (
+              <button
+                className={
+                  activeProjectCategory === category.value
+                    ? "project-tab active"
+                    : "project-tab"
+                }
+                key={category.value}
+                onClick={() => setActiveProjectCategory(category.value)}
+                type="button"
+              >
+                {category.label}
+              </button>
+            ))}
+          </div>
+
           <div className="project-grid">
-            {projects.map((project) => (
+            {visibleProjects.map((project) => (
               <article className="project-card" key={project.title}>
                 <div className="project-topline">
                   <span>{project.status}</span>

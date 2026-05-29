@@ -725,6 +725,37 @@ main {
   gap: 20px;
 }
 
+.project-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: -4px 0 26px;
+}
+
+.project-tab {
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #d7d7ff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.project-tab.active {
+  border-color: rgba(102, 192, 244, 0.46);
+  background: rgba(102, 192, 244, 0.16);
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(102, 192, 244, 0.22);
+}
+
+.page-shell[data-theme="minecraft"] .project-tab.active {
+  border-color: rgba(67, 181, 129, 0.5);
+  background: rgba(67, 181, 129, 0.18);
+}
+
 .faq-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
