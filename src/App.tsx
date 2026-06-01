@@ -82,6 +82,48 @@ const projectCategories: { label: string; value: ProjectCategory }[] = [
 
 const projects: Project[] = [
   {
+    title: "HUD von Elias",
+    status: "Neues Projekt",
+    description:
+      "Custom HUD für Minecraft mit übersichtlichen Spielerinfos und einem modernen Ingame-Look.",
+    tags: ["Minecraft", "Java", "HUD", "Client"],
+    detail:
+      "Ein visuelles HUD-Projekt, das wichtige Infos kompakt und sauber im Spiel darstellen soll.",
+    category: "utility",
+    badges: ["HUD", "UI", "Minecraft", "Overlay"],
+    commands: ["HUD Toggle", "HUD Layout", "HUD Settings"],
+    features: [
+      "Kompakte Anzeige wichtiger Spielerinformationen",
+      "Modernes Overlay statt überladener Standardansicht",
+      "Vorbereitet für Einstellungen und Layout-Varianten",
+      "Passend für Survival-, PvP- oder Server-Umgebungen",
+    ],
+    result:
+      "Das HUD macht Minecraft übersichtlicher und gibt dem Spieler direkt im Spiel mehr Orientierung.",
+    ctaLabel: "HUD Projekt anfragen",
+  },
+  {
+    title: "Rebound Mod",
+    status: "Neues Mod-Projekt",
+    description:
+      "Minecraft Mod mit Rebound-Mechanik und erweitertem Movement- oder Gameplay-Gefühl.",
+    tags: ["Minecraft", "Java", "Mod", "Gameplay"],
+    detail:
+      "Ein Mod-Projekt für neue Spielmechaniken, die sich schneller, direkter und spielerischer anfühlen.",
+    category: "plugin",
+    badges: ["Minecraft Mod", "Gameplay", "Movement", "Experiment"],
+    commands: ["Rebound Config", "Rebound Toggle", "Rebound Settings"],
+    features: [
+      "Rebound-Mechanik als eigenes Gameplay-Feature",
+      "Grundlage für Movement-, Kampf- oder Minigame-Systeme",
+      "Konfigurierbare Idee für Tests und Balancing",
+      "Kann später mit HUD oder Battle-Systemen kombiniert werden",
+    ],
+    result:
+      "Rebound erweitert Minecraft um ein eigenes Spielgefühl und dient als Basis für experimentelle Gameplay-Systeme.",
+    ctaLabel: "Rebound Mod anfragen",
+  },
+  {
     title: "BeaconEffects Plugin",
     status: "In Arbeit",
     description:
@@ -243,6 +285,8 @@ const projects: Project[] = [
 const skills = [
   "Java",
   "Minecraft Paper",
+  "Minecraft Mods",
+  "HUD Design",
   "Plugin Configs",
   "Server Tools",
   "React",
@@ -337,6 +381,16 @@ const faqItems = [
     question: "Was ist beim Battle Pass Plugin neu?",
     answer:
       "Das Battle Pass Plugin bekommt ein Analytics-System, damit Fortschritt, Aktivität und Belohnungen besser nachvollziehbar werden.",
+  },
+  {
+    question: "Was ist das HUD von Elias?",
+    answer:
+      "Das HUD ist ein neues Minecraft-Projekt für eine übersichtlichere Ingame-Anzeige mit modernen Overlay-Ideen.",
+  },
+  {
+    question: "Ist Rebound ein Plugin oder eine Mod?",
+    answer:
+      "Rebound ist als Mod-Projekt eingetragen, weil es eher eine eigene Gameplay-Mechanik als nur ein Server-Command-System beschreibt.",
   },
   {
     question: "Warum sind hier verschiedene Plugin-Arten gemischt?",
