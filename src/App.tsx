@@ -110,8 +110,8 @@ const projects: Project[] = [
     tags: ["Minecraft", "Java", "Mod", "Gameplay"],
     detail:
       "Ein Mod-Projekt für neue Spielmechaniken, die sich schneller, direkter und spielerischer anfühlen.",
-    category: "plugin",
-    badges: ["Minecraft Mod", "Gameplay", "Movement", "Experiment"],
+    category: "utility",
+    badges: ["Minecraft Mod", "Utility", "UI", "Gameplay"],
     commands: ["Rebound Config", "Rebound Toggle", "Rebound Settings"],
     features: [
       "Rebound-Mechanik als eigenes Gameplay-Feature",
